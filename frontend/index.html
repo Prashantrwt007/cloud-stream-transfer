@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloud File Transfer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Cloud File Transfer</h1>
+      <p class="subtitle">Move files from Google Drive to Dropbox, OneDrive, or S3.</p>
+    </header>
+
+    <section class="connect-bar">
+      <button id="loginBtn" class="btn btn-google">Connect Google Drive</button>
+      <button id="oneDriveLoginBtn" class="btn btn-onedrive">Connect OneDrive</button>
+
+      <div class="destination-picker">
+        <label for="cloudSelect">Send files to:</label>
+        <select id="cloudSelect">
+          <option value="dropbox">Dropbox</option>
+          <option value="onedrive">OneDrive</option>
+          <option value="s3">Amazon S3</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="fileContainer">
+          <tr>
+            <td colspan="5" class="empty-state">Connect Google Drive to see your files here.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

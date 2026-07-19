@@ -1,0 +1,26 @@
+{
+  "name": "cloud-file-transfer-backend",
+  "version": "1.0.0",
+  "description": "Backend API that lets a user authenticate with Google Drive and transfer files to Dropbox, OneDrive, or AWS S3.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1691.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "dropbox": "^10.34.0",
+    "express": "^4.21.1",
+    "googleapis": "^144.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
