@@ -5,7 +5,7 @@ Move files between cloud storage providers without ever downloading them to your
 ## Features
 
 - **Google Drive OAuth2 login** — securely list and select your Drive files
-- **Direct streaming transfer** — files move server-to-server, no local disk buffering
+- **Direct transfer pipeline** — files are obtained as a stream from Google Drive and passed to provider-specific uploaders
 - **Multi-destination support** — Dropbox, OneDrive, and Amazon S3
 - **Provider-agnostic upload layer** — new destinations can be added without touching core logic
 
@@ -22,14 +22,15 @@ Move files between cloud storage providers without ever downloading them to your
 
 ```
 Google Drive  →  Backend (Express)  →  Dropbox / OneDrive / S3
-                  streams file, no
-                  local disk write
+                  obtains file as
+                  a stream, delegates
+                  to provider uploader
 ```
 
 1. User connects their Google Drive account (OAuth2)
 2. Backend lists their Drive files
 3. User picks a file and a destination
-4. Backend streams the file directly from Drive into the destination's upload API
+4. Backend obtains the file as a stream from Drive and delegates to the destination's upload API
 
 ## Getting Started
 
@@ -89,6 +90,7 @@ backend/
 
 ## Limitations
 
+- Dropbox uploads currently buffer the stream in memory due to SDK constraints; S3 uses true streaming via @aws-sdk/lib-storage
 - Single-user token storage (not session-based) — not built for multiple concurrent users
 - No authentication on the API itself
 - Google Docs/Sheets/Slides files must be exported before transfer (not yet supported — only binary files like PDFs and images transfer currently)
