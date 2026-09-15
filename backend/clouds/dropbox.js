@@ -4,15 +4,21 @@ import fetch from "node-fetch";
 /**
  * Buffers the incoming stream and uploads it to Dropbox.
  * Dropbox's simple upload endpoint needs a full buffer rather than a stream.
+ * Uses refresh token for permanent auth — no manual token regeneration.
  * @param {NodeJS.ReadableStream} stream
  * @param {string} filename
  */
 export async function uploadToDropbox(stream, filename) {
-  if (!process.env.DROPBOX_ACCESS_TOKEN) {
-    throw new Error("DROPBOX_ACCESS_TOKEN is not set in .env");
+  if (!process.env.DROPBOX_APP_KEY || !process.env.DROPBOX_APP_SECRET || !process.env.DROPBOX_REFRESH_TOKEN) {
+    throw new Error("DROPBOX_APP_KEY, DROPBOX_APP_SECRET, and DROPBOX_REFRESH_TOKEN must be set in .env");
   }
 
-  const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN, fetch });
+  const dbx = new Dropbox({
+    clientId: process.env.DROPBOX_APP_KEY,
+    clientSecret: process.env.DROPBOX_APP_SECRET,
+    refreshToken: process.env.DROPBOX_REFRESH_TOKEN,
+    fetch,
+  });
 
   const chunks = [];
   for await (const chunk of stream) chunks.push(chunk);
